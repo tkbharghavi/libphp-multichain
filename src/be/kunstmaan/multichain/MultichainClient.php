@@ -890,4 +890,137 @@ class MultichainClient
     {
         return $this->jsonRPCClient->execute("sendrawtransaction", array($hex, $allowHighFees));
     }
+	
+	/**
+     * Creates a new stream on the blockchain
+     *
+     * @param $type
+     * @param $name
+     * @param bool $open
+	 * @param null $custom	 
+     * @return mixed
+     */
+    public function create($type, $name, $open=false, $custom = null)
+    {
+        $params = array($type, $name, $open, $custom);
+        return $this->jsonRPCClient->execute("create", $params);
+    }
+	
+	/**
+     * Lists streams on the blockchain
+     *
+     * @param $streams
+     * @param bool $verbose
+     * @param $count
+	 * @param $start
+     * @return mixed
+     */
+    public function listStreams($streams = "*", $verbose = false, $count, $start = -$count)
+    {
+        $params = array($streams, $verbose, $count, $start);
+        return $this->jsonRPCClient->execute("liststreams", $params);
+    }
+	
+	/**
+     * Publish stream items
+     *
+     * @param $stream
+     * @param $key
+     * @param $dataHex
+     * @return mixed
+     */
+    public function publish($stream, $key, $dataHex)
+    {
+        $params = array($stream, $key, $dataHex);
+        return $this->jsonRPCClient->execute("publish", $params);
+    }
+	
+	/**
+     * Subscribe to stream(s)
+     *
+     * @param $streams
+     * @param bool $reScan
+     * @return mixed
+     */
+    public function subscribe($streams, $reScan = true)
+    {
+        $params = array($streams, $reScan);
+        return $this->jsonRPCClient->execute("subscribe", $params);
+    }
+	
+	/**
+     * Unsubscribe from stream(s)
+     *
+     * @param $streams
+     * @return mixed
+     */
+    public function unsubscribe($streams)
+    {
+        $params = array($streams);
+        return $this->jsonRPCClient->execute("unsubscribe", $params);
+    }
+	
+	/**
+     * Get a stream item
+     *
+     * @param $stream
+     * @param $txId
+     * @param bool $verbose
+     * @return mixed
+     */
+    public function getStreamItem($stream, $txId, $verbose = false)
+    {
+        $params = array($stream, $txId, $verbose);
+        return $this->jsonRPCClient->execute("getstreamitem", $params);
+    }
+	
+	/**
+     * List items in a stream with a given key
+     *
+     * @param $stream
+     * @param $key
+     * @param bool $verbose
+     * @param $count
+	 * @param $start	 
+	 * @param bool $localOrdering
+     * @return mixed
+     */
+    public function listStreamKeyItems($stream, $key, $verbose = false, $count = 10, $start = -$count, $localOrdering = false)
+    {
+        $params = array($stream, $key, $verbose, $count, $start, $localOrdering);
+        return $this->jsonRPCClient->execute("liststreamkeyitems", $params);
+    }
+	
+	/**
+     * List keys in a stream
+     *
+     * @param $stream
+     * @param $keys
+     * @param bool $verbose
+     * @param $count
+	 * @param $start	 
+	 * @param bool $localOrdering
+     * @return mixed
+     */
+    public function listStreamKeys($stream, $keys = "*", $verbose = false, $count = "MAX", $start = -$count, $localOrdering = false)
+    {
+        $params = array($stream, $key, $verbose, $count, $start, $localOrdering);
+        return $this->jsonRPCClient->execute("liststreamkeys", $params);
+    }
+	
+	/**
+     * List items in a stream
+     *
+     * @param $stream
+     * @param bool $verbose
+     * @param $count
+	 * @param $start	 
+	 * @param bool $localOrdering
+     * @return mixed
+     */
+    public function listStreamItems($stream, $verbose = false, $count = 10, $start = -$count, $localOrdering = false)
+    {
+        $params = array($stream, $verbose, $count, $start, $localOrdering);
+        return $this->jsonRPCClient->execute("liststreamitems", $params);
+    }
 }
